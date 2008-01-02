@@ -37,6 +37,7 @@ BuildRequires: gcc-gfortran
 %if %{?fortran:1}%{?!fortran:0}
 Requires: netcdf-devel >= %{version}
 %endif
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
 NetCDF (network Common Data Form) is an interface for array-oriented data
