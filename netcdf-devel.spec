@@ -1,7 +1,7 @@
 %define name netcdf-devel%{?fortran:-%{fortran}}
 %define version 3.6.1
 %define realversion %{version}
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define fortrancomp gfortran
 %define isstdfortran %{?fortran:1}%{?!fortran:0}
