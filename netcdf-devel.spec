@@ -31,6 +31,8 @@ License: distributable (see COPYRIGHT)
 Source0: ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-%{realversion}.tar.bz2
 Source1: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.pdf.bz2
 Source2: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.html.tar.bz2
+Patch0:  netcdf-3.6.1-wformat.patch
+Patch1:  netcdf-3.6.1-gcc44.patch
 URL: http://www.unidata.ucar.edu/packages/netcdf/index.html
 Group: Development/C
 BuildRequires: gcc-gfortran
@@ -83,6 +85,8 @@ This netcdf has been built with %{fortran}
 %prep
 %setup -q -n netcdf-%{realversion}
 perl -pi -e "/^LIBDIR/ and s/\/lib/\/%_lib/g" src/macros.make.*
+%patch0 -p1 -b .wformat
+%patch1 -p1 -b .gcc44
 
 %build
 cd src
