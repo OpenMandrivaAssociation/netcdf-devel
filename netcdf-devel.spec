@@ -1,7 +1,7 @@
 %define name netcdf-devel%{?fortran:-%{fortran}}
-%define version 3.6.1
+%define version 3.6.3
 %define realversion %{version}
-%define release %mkrel 6
+%define release %mkrel 1
 
 %define fortrancomp gfortran
 %define isstdfortran %{?fortran:1}%{?!fortran:0}
@@ -28,11 +28,10 @@ Version: %{version}
 Release: %{release}
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 License: distributable (see COPYRIGHT)
-Source0: ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-%{realversion}.tar.bz2
+Source0: ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-%{realversion}.tar.gz
 Source1: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.pdf.bz2
 Source2: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.html.tar.bz2
-Patch0:  netcdf-3.6.1-wformat.patch
-Patch1:  netcdf-3.6.1-gcc44.patch
+Patch0:  netcdf-3.6.3-wformat.patch
 URL: http://www.unidata.ucar.edu/packages/netcdf/index.html
 Group: Development/C
 BuildRequires: gcc-gfortran
@@ -85,12 +84,9 @@ This netcdf has been built with %{fortran}
 %prep
 %setup -q -n netcdf-%{realversion}
 perl -pi -e "/^LIBDIR/ and s/\/lib/\/%_lib/g" src/macros.make.*
-%patch0 -p1 -b .wformat
-%patch1 -p1 -b .gcc44
+%patch0 -p0 -b .wformat
 
 %build
-cd src
-
 export F77=%{fortrancomp}
 export FC=%{fortrancomp}
 export F90=%{fortrancomp}
@@ -115,7 +111,6 @@ export CXXFLAGS="$RPM_OPT_FLAGS -fno-fast-math -DNAGf90Fortran -fPIC"
 make
 
 %check
-cd src
 %if %{?_with_nag:0}%{?!_with_nag:1}
 make test
 %endif
@@ -123,10 +118,9 @@ make test
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_prefix} $RPM_BUILD_ROOT%{_mandir}
-(cd src
 %makeinstall
 
-mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
+#mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
 
 %if %{?fortran:1}%{?!fortran:0}
 mv %{buildroot}%{_libdir}/libnetcdf.a %{buildroot}%{_libdir}/libnetcdf-%{fortran}.a
@@ -141,7 +135,6 @@ mv %{buildroot}%{_libdir}/libnetcdf.a %{buildroot}%{_libdir}/libnetcdf-%{fortran
 )
 %endif
 
-)
 bzcat %{SOURCE1} > guidec.pdf
 bzcat %{SOURCE2} | tar xvf -
 
@@ -151,13 +144,23 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_libdir}/*.a
+%{_libdir}/*.la
+%{_infodir}/netcdf-c.info.*
+%{_infodir}/netcdf-cxx.info.*
+%{_infodir}/netcdf-install.info.*
+%{_infodir}/netcdf-tutorial.info.*
+%{_infodir}/netcdf.info.*
 %if %{?fortran:0}%{?!fortran:1}
-%doc src/COPYRIGHT src/README src/RELEASE_NOTES guidec.pdf guidec
+%doc README RELEASE_NOTES guidec.pdf guidec
 %{_bindir}/ncgen
 %{_bindir}/ncdump
+%{_infodir}/netcdf-f77.info.*
+%{_infodir}/netcdf-f90.info.*
 %{_mandir}/man1/ncgen.1*
 %{_mandir}/man1/ncdump.1*
 %{_mandir}/man3/netcdf.3*
+%{_mandir}/man3/netcdf_f77.3.*
+%{_mandir}/man3/netcdf_f90.3.*
 %endif
 %if %{isstdfortran}
 %dir %{_includedir}/%{fortran}
@@ -165,5 +168,3 @@ rm -rf $RPM_BUILD_ROOT
 %else
 %{_includedir}/*
 %endif
-
-
