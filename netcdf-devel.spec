@@ -116,11 +116,11 @@ make test
 %endif
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{_prefix} $RPM_BUILD_ROOT%{_mandir}
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/%{_prefix} %{buildroot}%{_mandir}
 %makeinstall
 
-#mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
+#mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}
 
 %if %{?fortran:1}%{?!fortran:0}
 mv %{buildroot}%{_libdir}/libnetcdf.a %{buildroot}%{_libdir}/libnetcdf-%{fortran}.a
@@ -139,7 +139,7 @@ bzcat %{SOURCE1} > guidec.pdf
 bzcat %{SOURCE2} | tar xvf -
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
