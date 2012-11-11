@@ -1,0 +1,44 @@
+--- ncdump/indent.c.str	2010-03-30 15:58:05.000000000 +0200
++++ ncdump/indent.c	2010-03-30 15:58:26.000000000 +0200
+@@ -40,10 +40,10 @@
+ 
+     int ind = indent;
+     while (ind > indent_small) {
+-	(void) printf(indents[indent_small]);
++	(void) printf("%s",indents[indent_small]);
+ 	ind -= indent_small;
+     }
+-    (void) printf(indents[ind]);
++    (void) printf("%s",indents[ind]);
+ }
+ 
+ void 
+--- ncdump/vardata.c.str	2010-03-30 15:57:20.000000000 +0200
++++ ncdump/vardata.c	2010-03-30 15:57:50.000000000 +0200
+@@ -230,7 +230,7 @@
+ 	print_any_val(sb, vp, (void *)valp);
+ 	valp += vp->tinfo->size; /* next value according to type */
+ 	if (fsp->full_data_cmnts) {
+-	    printf(sb->buf);
++	    printf("%s",sb->buf);
+ 	    printf(",");
+ 	    annotate (vp, fsp, cor, iel);
+ 	} else {
+@@ -241,7 +241,7 @@
+     print_any_val(sb, vp, (void *)valp);
+     valp += vp->tinfo->size;	/* next value according to type */
+     if (fsp->full_data_cmnts) {
+-	printf(sbuf_str(sb));
++	printf("%s",sbuf_str(sb));
+ 	lastdelim (more, lastrow);
+ 	annotate (vp, fsp, cor, iel);
+     } else {
+@@ -432,7 +432,7 @@
+ 		&& left > 0) {	/* print brief comment with indices range */
+ /* 		printf("// %s(",vp->name); */
+ 		printf("// ");
+-		printf(vp->name);
++		printf("%s",vp->name);
+ 		printf("(");
+ 		switch (fsp->data_lang) {
+ 		  case LANG_C:
