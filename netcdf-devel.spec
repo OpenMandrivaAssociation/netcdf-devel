@@ -1,7 +1,7 @@
 %define name netcdf-devel%{?fortran:-%{fortran}}
 %define version 3.6.3
 %define realversion %{version}
-%define release %mkrel 3
+%define release %mkrel 5
 
 %define fortrancomp gfortran
 %define isstdfortran %{?fortran:1}%{?!fortran:0}
@@ -116,11 +116,11 @@ make test
 %endif
 
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}/%{_prefix} %{buildroot}%{_mandir}
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/%{_prefix} $RPM_BUILD_ROOT%{_mandir}
 %makeinstall
 
-#mv %{buildroot}%{_prefix}/man/* %{buildroot}%{_mandir}
+#mv $RPM_BUILD_ROOT%{_prefix}/man/* $RPM_BUILD_ROOT%{_mandir}
 
 %if %{?fortran:1}%{?!fortran:0}
 mv %{buildroot}%{_libdir}/libnetcdf.a %{buildroot}%{_libdir}/libnetcdf-%{fortran}.a
@@ -139,12 +139,11 @@ bzcat %{SOURCE1} > guidec.pdf
 bzcat %{SOURCE2} | tar xvf -
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
 %{_libdir}/*.a
-%{_libdir}/*.la
 %{_infodir}/netcdf-c.info.*
 %{_infodir}/netcdf-cxx.info.*
 %{_infodir}/netcdf-install.info.*
@@ -168,3 +167,77 @@ rm -rf %{buildroot}
 %else
 %{_includedir}/*
 %endif
+
+
+%changelog
+* Wed May 04 2011 Oden Eriksson <oeriksson@mandriva.com> 3.6.3-3mdv2011.0
++ Revision: 666611
+- mass rebuild
+
+* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 3.6.3-2mdv2011.0
++ Revision: 606820
+- rebuild
+
+* Tue Mar 30 2010 Funda Wang <fwang@mandriva.org> 3.6.3-1mdv2010.1
++ Revision: 529726
+- new version 3.6.3
+
+* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 3.6.1-6mdv2010.1
++ Revision: 521152
+- rebuilt for 2010.1
+
+* Tue Sep 01 2009 Christophe Fergeau <cfergeau@mandriva.com> 3.6.1-5mdv2010.0
++ Revision: 423654
+- rebuild
+- fix -Wformat warnings
+- fix gcc 4.4 compilation
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 3.6.1-3mdv2008.1
++ Revision: 130573
+- kill re-definition of %%buildroot on Pixel's request
+
+
+* Mon Mar 19 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 3.6.1-3mdv2007.1
++ Revision: 146599
+- Fixed Group (bug #28161).
+
+* Sun Feb 18 2007 Giuseppe GhibÃ² <ghibo@mandriva.com> 3.6.1-2mdv2007.1
++ Revision: 122417
+- rebuild.
+- Import netcdf-devel
+
+* Fri May 05 2006 Giuseppe Ghibò <ghibo@mandriva.com> 3.6.1-1mdk
+- Release 3.6.1.
+
+* Tue Dec 20 2005 Olivier Thauvin <nanardon@mandriva.org> 3.6.1-0.beta3.3mdk
+- From Philippe Weill <Philippe.Weill@aero.jussieu.fr>
+  - change false comments to change Fortran compiler
+  - removing somes files when compiled with other than standard fortran
+    to install more than one version without conflict
+  - added dependancy to standard version when compiled with other fortran
+  -removing test for nag fortran ( one test as syntax problem )
+
+* Fri Oct 07 2005 Olivier Thauvin <nanardon@mandriva.org> 3.6.1-0.beta3.2mdk
+* Thu Oct 06 2005 Olivier Thauvin <nanardon@mandriva.org> 3.6.1-0.beta3.1mdk
+- From Philippe Weill <Philippe.Weill@aero.jussieu.fr>
+  - allow build with pgf90, g95, fortran nag
+  - 3.6.1beta3
+  - -fPIC for x86_64
+- re-add %%doc
+- spec cleanup
+
+* Mon May 23 2005 Laurent MONTEL <lmontel@mandriva.com> 3.6.1-0.beta3.1mdk
+- 3.6.1-beta3
+
+* Mon May 23 2005 Laurent MONTEL <lmontel@mandriva.com> 3.5.0-7mdk
+- Fix
+
+* Wed Mar 23 2005 Giuseppe Ghibò <ghibo@mandrakesoft.com> 3.5.0-6mdk
+- Rebuilt.
+
