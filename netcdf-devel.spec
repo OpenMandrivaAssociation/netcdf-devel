@@ -78,7 +78,7 @@ This netcdf has been built with %{fortran}
 
 
 %prep
-%setup -q
+%setup -q -n netcdf-%{version}
 perl -pi -e "/^LIBDIR/ and s/\/lib/\/%_lib/g" src/macros.make.*
 %patch0 -p0 -b .wformat
 
