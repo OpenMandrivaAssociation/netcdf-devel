@@ -20,6 +20,9 @@
 %define fortran nag
 %endif
 
+%define _disable_lto 1
+%define _disable_rebuild_configure 1
+
 Summary:	Libraries to use the Unidata network Common Data Form (netCDF)
 Name:		%{name}
 Version:	3.6.3
