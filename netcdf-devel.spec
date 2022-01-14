@@ -1,8 +1,10 @@
+#This package should be upgraded for Lx5
+
 %define name netcdf-devel%{?fortran:-%{fortran}}
 
 %define fortrancomp gfortran
 %define isstdfortran %{?fortran:1}%{?!fortran:0}
-%define foptflags %optflags
+%define foptflags %optflags 
 
 %if %{?_with_pgf:1}%{?!_with_pgf:0}
 %define fortrancomp pgf90
@@ -26,7 +28,7 @@
 Summary:	Libraries to use the Unidata network Common Data Form (netCDF)
 Name:		%{name}
 Version:	3.6.3
-Release:	15
+Release:	1
 Group:		Development/C
 License:	distributable (see COPYRIGHT)
 Url:		http://www.unidata.ucar.edu/packages/netcdf/index.html
@@ -89,9 +91,9 @@ perl -pi -e "/^LIBDIR/ and s/\/lib/\/%_lib/g" src/macros.make.*
 export F77=%{fortrancomp}
 export FC=%{fortrancomp}
 export F90=%{fortrancomp}
-export FFLAGS=-fPIC
-export FCFLAGS=-fPIC
-export F90FLAGS=-fPIC
+export FFLAGS="-fPIC -fallow-argument-mismatch"
+export FCFLAGS=-fPIC 
+export F90FLAGS=-fPIC 
 export CFLAGS="%optflags -DpgiFortran -fPIC"
 export CPPFLAGS="%optflags -DpgiFortran -fPIC"
 export CXXFLAGS="%optflags -DpgiFortran -fPIC"
