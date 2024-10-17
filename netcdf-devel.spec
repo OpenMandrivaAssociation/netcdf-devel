@@ -31,7 +31,7 @@ Version:	3.6.3
 Release:	1
 Group:		Development/C
 License:	distributable (see COPYRIGHT)
-Url:		http://www.unidata.ucar.edu/packages/netcdf/index.html
+Url:		https://www.unidata.ucar.edu/packages/netcdf/index.html
 Source0:	ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-%{version}.tar.gz
 Source1:	ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.pdf.bz2
 Source2:	ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.html.tar.bz2
